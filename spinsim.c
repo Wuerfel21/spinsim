@@ -74,6 +74,7 @@ int32_t fjmpflag = 0;
 int32_t nohubslots = 0;
 int32_t pstmode = 0;
 int32_t kludge = 0;
+int32_t exitseq = -1;
 
 FILE *logfile = NULL;
 FILE *tracefile = NULL;
@@ -113,6 +114,7 @@ void usage(void)
     //fprintf(stderr, "     -c  Enable cycle-accurate mode for pasm cogs\n");
     fprintf(stderr, "     -t# Enable the Prop 2 mode.  # specifies options\n");
     fprintf(stderr, "     -b# Enable the serial port and set the baudrate to # (default 115200)\n");
+    fprintf(stderr, "     -q  Enable proploader-style exit sequence on serial port\n");
     fprintf(stderr, "     -B <filename>  Redirects serial output to filename\n");
     fprintf(stderr, "     -gdb Operate as a GDB target over stdin/stdout\n");
     fprintf(stderr, "     -L <filename> Log GDB remote comm to <filename>\n");
@@ -576,6 +578,22 @@ void CheckSerialOut(SerialT *serial)
     if (serial->flag)
     {
         serial->flag = 0;
+        if (exitseq == 0 && serial->value == 255) {
+            exitseq = 1;
+            return;
+        } else if (exitseq == 1) {
+            if (serial->value==0) {
+                exitseq = 2;
+                return;
+            } else {
+                exitseq = 0;
+                putschx(255);
+            }
+        } else if (exitseq == 2) {
+            spinsim_exit(serial->value);
+        }
+        
+
         if (serial->value == 13 && pstmode)
             putschx(10);
         else
@@ -803,6 +821,8 @@ int main(int argc, char **argv)
 	    symflag = 1;
 	else if (strcmp(argv[i], "-P") == 0)
 	    profile = 1;
+	else if (strcmp(argv[i], "-q") == 0)
+        exitseq = 0;
 	else if (strncmp(argv[i], "-m", 2) == 0)
 	{
 	    sscanf(&argv[i][2], "%d", &memsize);
