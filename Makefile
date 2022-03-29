@@ -26,7 +26,9 @@ SOURCES = spinsim.c spininterp.c spindebug.c pasmsim.c pasmdebug.c pasmsim2.c pa
 
 ifneq ($(MSYSTEM),MINGW32)
 ifneq ($(OS),msys)
+ifneq ($(OS),Windows_NT)
 SOURCES += conion.c
+endif
 endif
 endif
 
@@ -36,7 +38,7 @@ OBJECTS = $(patsubst %,$(BUILD)/%, $(SOURCES:.c=.o))
 # commented them out for the time being
 #LDFLAGS = -Wl,--relax -Wl,--gc-sections
 LDFLAGS = -lm
-OPT := -O3
+OPT := -O3 -flto -fno-fat-lto-objects
 CFLAGS  = -c -g -Wall -Wno-format $(OPT) -D LINUX
 
 all: directory $(SOURCES) $(OBJECTS) Makefile
