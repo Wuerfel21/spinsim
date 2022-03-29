@@ -19,7 +19,7 @@
 extern FILE *logfile;
 extern FILE *tracefile;
 extern FILE *cmdfile;
-extern PasmVarsT PasmVars[8];
+extern PasmVarsT PasmVars[16];
 extern char *hubram;
 char cmd[1028];
 extern int32_t profile;

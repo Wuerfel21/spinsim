@@ -11,7 +11,7 @@ extern char *hubram;
 extern int32_t memsize;
 extern char lockstate[16];
 extern char lockalloc[16];
-extern PasmVarsT PasmVars[8];
+extern PasmVarsT PasmVars[16];
 extern int32_t pasmspin;
 extern int32_t cycleaccurate;
 extern int32_t loopcount;

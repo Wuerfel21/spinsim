@@ -14,7 +14,7 @@
 #include "spinsim.h"
 
 extern int32_t printflag;
-extern PasmVarsT PasmVars[8];
+extern PasmVarsT PasmVars[16];
 extern char *hubram;
 extern int32_t memsize;
 extern int32_t loopcount;

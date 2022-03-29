@@ -24,7 +24,7 @@ extern int32_t baudrate;
 extern int32_t eeprom;
 extern char *hubram;
 extern int32_t printbreak;
-extern PasmVarsT PasmVars[8];
+extern PasmVarsT PasmVars[16];
 extern SerialT serial_in;
 extern SerialT serial_out;
 

@@ -56,12 +56,12 @@ static int wrl_flags1 = 0;
 static int rdl_flags0 = 0;
 static int rdl_flags1 = 0;
 
-char *GetOpname2(unsigned int, int *, int *, int *);
+char *GetOpname2(unsigned int, int *, int *, int *, int);
 
 static void NotImplemented(int instruction)
 {
     int dummy;
-    char *opname = GetOpname2(instruction, &dummy, &dummy, &dummy);
+    char *opname = GetOpname2(instruction, &dummy, &dummy, &dummy,0);
     printf("%s%s not implemented - %8.8x%s", NEW_LINE, opname, instruction, NEW_LINE);
     spinsim_exit(1);
 }
@@ -2641,13 +2641,13 @@ int32_t ExecutePasmInstruction2(PasmVarsT *pasmvars)
                 if (value2 >= 0xfff80 && value2 < 0xfffc0)
                     wrl_flags0 |= 1 << ((value2 >> 2) & 15);
 	        result = read_unaligned_long(value2);
-                if ((value1 & 0xff) != 0xff)
+                if (value1 & 0xff)
                     result = (result & ~0xff) | (value1 & 0xff);
-                if ((value1 & 0xff) != 0xff00)
+                if (value1 & 0xff00)
                     result = (result & ~0xff00) | (value1 & 0xff00);
-                if ((value1 & 0xff) != 0xff0000)
+                if (value1 & 0xff0000)
                     result = (result & ~0xff0000) | (value1 & 0xff0000);
-                if ((value1 & 0xff) != 0xff000000)
+                if (value1 & 0xff000000)
                     result = (result & ~0xff000000) | (value1 & 0xff000000);
 	        write_unaligned_long(value2, result);
                 if (pasmvars->printflag > 1)
@@ -3618,7 +3618,7 @@ int32_t ExecutePasmInstruction2(PasmVarsT *pasmvars)
 
                 case 43: // pop
 		pasmvars->retptr = (pasmvars->retptr - 1) & 7;
-		pasmvars->retstack[pasmvars->retptr] = value1;
+		result = pasmvars->retstack[pasmvars->retptr];
 		if (pasmvars->retptr == 7)
 		    printf("return stack underflow%s", NEW_LINE);
                 break;
