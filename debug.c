@@ -247,7 +247,7 @@ int32_t RunProp(int32_t maxloops)
     while (runflag && (maxloops < 0 || loopcount < maxloops))
     {
         runflag = step_chip();
-        CheckCommand();
+        //CheckCommand();
         if (baudrate)
         {
             CheckSerialOut(&serial_out);

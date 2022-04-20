@@ -28,12 +28,16 @@ void PrintResults(int32_t zcri, int32_t zflag, int32_t cflag, int32_t result)
 
 static int32_t parity(int32_t val)
 {
+#if 0
     val ^= val >> 16;
     val ^= val >> 8;
     val ^= val >> 4;
     val ^= val >> 2;
     val ^= val >> 1;
     return val & 1;
+#else
+	return __builtin_parity(val);
+#endif
 }
 
 static int32_t abs(int32_t val)

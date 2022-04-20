@@ -37,21 +37,10 @@ int32_t MAP_ADDR(int32_t addr)
 {
     if ((addr & 0xfffffff0) == 0x12340000)
     {
-	addr = memsize + (addr & 15);
-    }
-    else if (memsize == 65536)
-    {
-        addr &= 0xffff;
-    }
-    else if (((uint32_t)addr) >= memsize)
-    {
-#if 0
-        fprintf(tracefile, "MAP_ADDR(%d): address out of bounds %8.8x\n", loopcount, addr);
-	addr = memsize + 12;
-#else
-        addr &= memsize - 1;
-#endif
-    }
+		addr = memsize + (addr & 15);
+    } else {
+    	addr &= memsize - 1;
+	}
     //fprintf(tracefile, "MAP_ADDR: %8.8x %8.8x\n", addr, ((uint32_t *)hubram)[addr>>2]);
 
     return addr;
