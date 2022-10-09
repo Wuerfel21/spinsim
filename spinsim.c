@@ -578,6 +578,7 @@ void CheckSerialOut(SerialT *serial)
     if (serial->flag)
     {
         serial->flag = 0;
+        printf(" - Serial receive val = %d\n",serial->value);
         if (exitseq == 0 && serial->value == 255) {
             exitseq = 1;
             return;
