@@ -523,7 +523,7 @@ int CheckSerialIn(SerialT *serial)
     if (!serial->flag && kbhit1())
     {
         value = getch();
-//printf("CheckSerialIn: value = %x\n", value);
+        printf("CheckSerialIn: value = %x\n", value);
         if (value == 0x1d) return 1;
         serial->flag = 1;
         serial->value = value;
