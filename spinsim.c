@@ -525,6 +525,7 @@ int CheckSerialIn(SerialT *serial)
         value = getch();
 //printf("CheckSerialIn: value = %x\n", value);
         if (value == 0x1d) return 1;
+        if (value == EOF) return 0;
         serial->flag = 1;
         serial->value = value;
     }
