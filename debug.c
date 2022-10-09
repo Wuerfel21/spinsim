@@ -251,7 +251,7 @@ int32_t RunProp(int32_t maxloops)
         if (baudrate)
         {
             CheckSerialOut(&serial_out);
-            if (CheckSerialIn(&serial_in)) return 1;
+            //if (CheckSerialIn(&serial_in)) return 1;
         }
         if (eeprom)
             CheckEEProm();
