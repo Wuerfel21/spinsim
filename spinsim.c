@@ -699,6 +699,7 @@ void RebootProp(void)
             bitcycles = 80000000 / baudrate;
         else
             bitcycles = (LONG(0) / baudrate) >> 2;
+        printf("Bitcycles: %d\n",bitcycles);
         SerialInit(&serial_in, 31, bitcycles, 2);
         SerialInit(&serial_out, 30, bitcycles, 2);
     }
