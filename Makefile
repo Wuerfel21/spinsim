@@ -38,7 +38,7 @@ OBJECTS = $(patsubst %,$(BUILD)/%, $(SOURCES:.c=.o))
 # commented them out for the time being
 #LDFLAGS = -Wl,--relax -Wl,--gc-sections
 LDFLAGS = -lm
-OPT := -O3 -flto -fno-fat-lto-objects -fwrapv -march=native
+OPT := -Og -flto -fno-fat-lto-objects -fwrapv -march=native
 CFLAGS  = -c -g -Wall -Wno-format $(OPT) -D LINUX
 
 all: directory $(SOURCES) $(OBJECTS) Makefile
